@@ -34,5 +34,9 @@ class UserForm(UserCreationForm):
         if len(phone)<12:
             raise forms.ValidationError("Please enter phone with country code and length must be 12 or more")
         return phone
-
+class UserUpdateForm(forms.ModelForm):
+    class Meta:
+        model=User
+        fields=["full_name",'email','phone','phone','address']
+        
         

@@ -51,6 +51,19 @@ def siginup_user(request):
     return render(request,"register.html",{"form":form})
    
 @login_required(login_url='login')
+
+def profile(request):
+    user=request.user
+    if request.method=="POST":
+        form=UserUpdateForm(request.POST or None,instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request,"info updated")
+            return redirect("profile")
+    else:
+        form=UserUpdateForm(instance=user)
+   
+    return render(request,"profile.html",{"form":form})
 def logout_user(request):
     logout(request)
     messages.success(request,"user logout!")
