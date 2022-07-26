@@ -1,0 +1,167 @@
+
+{% extends 'base.html' %}
+{% load materializecss %}
+
+{% block css %}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/css/materialize.min.css" integrity="sha256-qj3p6P1fJIV+Ndv7RW1ovZI2UhOuboj9GcODzcNFIN8=" crossorigin="anonymous" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box
+}
+
+body {
+    background-color: #eee;
+    height: 100vh;
+    font-family: 'Poppins', sans-serif;
+    
+}
+
+.wrapper {
+    max-width: 500px;
+    border-radius: 10px;
+    margin: 50px auto;
+    padding: 30px 40px;
+    box-shadow: 20px 20px 80px rgb(206, 206, 206)
+}
+
+.h2 {
+    font-family: 'Kaushan Script', cursive;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color:  #27b392;
+    font-style: italic
+}
+
+.h4 {
+    font-family: 'Poppins', sans-serif
+}
+
+
+
+
+.fa-eye-slash.btn {
+    border: none;
+    outline: none;
+    box-shadow: none
+}
+
+a {
+    text-decoration: none;
+    color:  #27b392;
+    font-weight: 700
+}
+
+a:hover {
+    text-decoration: none;
+    color: #6fc7b2;
+}
+
+
+
+
+
+
+
+
+
+.btn.btn-block {
+    border-radius: 20px;
+    background-color: #27b392;
+    color: #fff
+}
+
+.btn.btn-block:hover {
+    background-color:#6fc7b2;
+}
+
+@media(max-width: 575px) {
+    .wrapper {
+        margin: 10px
+    }
+}
+
+@media(max-width:424px) {
+    .wrapper {
+        padding: 30px 10px;
+        margin: 5px
+    }
+
+    .option {
+        position: relative;
+        padding-left: 22px
+    }
+
+    .option label.text-muted {
+        font-size: 0.95rem
+    }
+
+    .checkmark {
+        position: absolute;
+        top: 2px
+    }
+
+    .option .checkmark:after {
+        top: 50%
+    }
+
+    #forgot {
+        font-size: 0.95rem
+    }
+}
+</style>
+{% endblock css %}
+
+{% block content %}
+<form action="" method="post">
+
+    {% csrf_token %}
+ 
+    <div class="wrapper bg-white">
+      <div class="h2 text-center">Register Django App</div>
+      
+      <form class="pt-3">
+       {% for f in form %}
+       {{f.label}}
+       {{f}}
+       
+       {{f.errors}}
+      
+      
+       {% endfor %}
+
+          <div class="d-flex align-items-start">
+              
+          </div> <button class="btn btn-block text-center my-3">Register</button>
+          <div class="text-center pt-3 text-muted">already have an account? <a href={% url 'login' %}>Login</a></div>
+      </form>
+  </div>
+</form>
+
+
+{% endblock content %}
+
+
+
+{% block javascript %}
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-rc.1/js/materialize.min.js" integrity="sha256-SrBfGi+Zp2LhAvy9M1bWOCXztRU9Ztztxmu5BcYPcPE=" crossorigin="anonymous"></script>
+
+<script>
+$(document).ready(function(){
+
+  // Initialize materialize data picker
+  $('.datepicker').datepicker({'format': 'yyyy-mm-dd'});
+  $('select').formSelect();
+
+});
+</script>
+{% endblock javascript %}
