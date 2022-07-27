@@ -9,17 +9,12 @@ from django import forms
 
 from .models import User
 from django.utils.translation import gettext_lazy as _
-from django.contrib.auth.forms import UserCreationForm,UserChangeForm
+from django.contrib.auth.forms import UserCreationForm,UserChangeForm,AuthenticationForm
 class UserForm(UserCreationForm):
     class Meta:
         model=User
         fields=("email",)
         
-    
-
-        
-        
-    
 class ChanageUsersFrom(UserChangeForm):
     class Meta:
         model=User
