@@ -41,3 +41,9 @@ class UserAdmin(BaseUserAdmin):
 
 admin.site.register(User,UserAdmin)
 admin.site.register(UserExtendsWithBase)
+admin.site.register(ItemCategory)
+class ItemAdmin(admin.ModelAdmin):
+    
+    readonly_fields=('item_code','slug' )
+admin.site.register(Item,ItemAdmin)
+admin.site.register(Profile)
