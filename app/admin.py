@@ -35,5 +35,13 @@ class UserAdmin(BaseUserAdmin):
         if not obj:
             return list()
         return super(UserAdmin, self).get_inline_instances(request, obj)
+admin.site.register(User,UserAdmin)
 
-admin.site.register(User, UserAdmin)
+admin.site.register(ItemCategory)
+class ItemAdmin(admin.ModelAdmin):
+    
+    readonly_fields=('item_code','slug' )
+admin.site.register(Item,ItemAdmin)
+admin.site.register(Profile)
+
+
