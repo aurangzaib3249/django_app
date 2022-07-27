@@ -39,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'materializecssform',
+    'phonenumber_field',
+    'phone_field',
+    'forms_fieldset',
+
 ]
 AUTH_USER_MODEL="app.User"
 MIDDLEWARE = [

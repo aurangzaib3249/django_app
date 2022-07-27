@@ -8,6 +8,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.messages import constants 
 from django.contrib import messages
 
+from django.contrib.auth.forms import UserCreationForm,UserChangeForm
 MESSAGE_TAGS = {
     constants.DEBUG: 'info',
     constants.INFO: 'info',
@@ -31,38 +32,44 @@ def sigin_user(request):
                     messages.success(request,"Welcome to django app")
                 else:
                     messages.success(request,"Welcome back to django app")
+                next=request.GET.get('next')
+               
+                if next:
+                    if next=="/":
+                        next="home"
+                    next=next.replace("/","")
+                    login(request,user)
+                    return redirect(next)
                 login(request,user)
                 return redirect("home")
-                
             else:
                 messages.error(request,"Username or password is invalid!")
         else:
             messages.error(request,"Both fields are required!")
     return render(request,"login.html")
-
 def siginup_user(request):
     if request.method=="POST":
         form=UserForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect("home")
+            return redirect("profile")
     else:
         form=UserForm()
     return render(request,"register.html",{"form":form})
-   
-@login_required(login_url='login')
 
+
+@login_required(login_url='login')
 def profile(request):
+    print("profile")
     user=request.user
     if request.method=="POST":
-        form=UserUpdateForm(request.POST or None,instance=user)
+        form=ChanageUsersFrom(request.POST or None,instance=user)
         if form.is_valid():
             form.save()
             messages.success(request,"info updated")
             return redirect("profile")
     else:
-        form=UserUpdateForm(instance=user)
-   
+        form=ChanageUsersFrom(instance=user)
     return render(request,"profile.html",{"form":form})
 def logout_user(request):
     logout(request)
