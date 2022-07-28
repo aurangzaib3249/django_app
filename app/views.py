@@ -17,6 +17,12 @@ MESSAGE_TAGS = {
 }
 @login_required(login_url='login')
 def home(request):
+    user=request.user
+    print("Active items",Item.objects.get_active_all_items())
+    print("inactive items",Item.objects.get_inactive_all_items())
+    print("user active items",Item.objects.get_user_active_items(user))
+    print("user inactive items",Item.objects.get_user_inactive_items(user))
+    print("user all items",Item.objects.get_user_all_items(user))
     return render(request,"home.html")
 @require_http_methods(["POST","GET"])
 def sigin_user(request):
