@@ -32,7 +32,7 @@ class UserForm(UserCreationForm):
     def clean_phone(self):
         phone=self.cleaned_data["phone"]
         if len(phone)<12:
-            raise forms.ValidationError("Please enter phone with country code and length must be 12 or more")
+            raise forms.ValidationError("Phone should have at least 12 letters")
         return phone
 class UserUpdateForm(forms.ModelForm):
     class Meta:
