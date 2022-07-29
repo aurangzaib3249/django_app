@@ -37,3 +37,7 @@ class UserAdmin(BaseUserAdmin):
         return super(UserAdmin, self).get_inline_instances(request, obj)
 
 admin.site.register(User, UserAdmin)
+admin.site.register(ItemCategory)
+admin.site.register(Item)
+admin.site.register(Order)
+admin.site.register(OrderItem)
