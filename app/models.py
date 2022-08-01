@@ -72,7 +72,7 @@ class ItemCategory(models.Model):
         count=Item.objects.filter(category__category=self.category).count()
         print(count)
         if count>0:
-            raise ValidationError(self.category+" le please delete items before")
+            raise ValidationError(self.category+" please delete items before")
         else:
             super(ItemCategory,self).delete(*args, **kwargs)
     
