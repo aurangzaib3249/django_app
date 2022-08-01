@@ -1,3 +1,5 @@
+from unicodedata import name
+from xml.etree.ElementInclude import include
 from django.forms import PasswordInput
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
@@ -7,7 +9,12 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods
 from django.contrib.messages import constants 
 from django.contrib import messages
-
+from django.conf import settings
+from django.core import management
+from django.core.management.commands import makemigrations,migrate
+from django_app.settings import *
+db_dict={}
+#settings.DATABASES['default']['NAME'] = "admin1"
 MESSAGE_TAGS = {
     constants.DEBUG: 'info',
     constants.INFO: 'info',
@@ -17,6 +24,18 @@ MESSAGE_TAGS = {
 }
 @login_required(login_url='login')
 def home(request):
+    #use this setting just for multiple database testing
+    database=request.user.email
+    settings.DATABASES[database]={
+                    'ENGINE': 'django.db.backends.sqlite3',
+                     'NAME': BASE_DIR / "{}.sqlite3".format(database),
+                }
+    print(settings.DATABASES)
+    res=management.call_command('migrate', verbosity=4,interactive=False,database=database,run_syncdb=True)
+    print(request.user._state.db)  #current Database name
+    print(User.objects.using(database).all()) #get all users from current loggedin user database
+    print(request.user._state.db)
+    print(settings.DATABASES)
     return render(request,"home.html")
 @require_http_methods(["POST","GET"])
 def sigin_user(request):
