@@ -76,6 +76,9 @@ class ItemCategory(models.Model):
         else:
             super(ItemCategory,self).delete(*args, **kwargs)
     
+    
+    
+    
 class Item(models.Model):
     item_name=models.CharField(_("Item Name"),max_length=35)
     item_code=models.CharField(max_length=35,blank=True,null=True)
