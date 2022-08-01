@@ -42,3 +42,15 @@ class User(AbstractUser):
     address= models.CharField(max_length=200,null=True,blank=True)
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+    
+    
+class TestDb(models.Model):
+    
+    email = models.EmailField(_('email address'),unique=True)
+    full_name = models.CharField(max_length=100,null=True,blank=True)
+    phone= models.CharField('Phone', max_length=15,null=True)
+    address= models.CharField(max_length=200,null=True,blank=True)
+    zip_code=models.CharField(max_length=20,default=0)
+    country=models.CharField(max_length=20,default=0)
+    def __str__(self) -> str:
+        return self.email
