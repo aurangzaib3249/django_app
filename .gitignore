@@ -1,0 +1,18 @@
+__pycache__/
+*.py[cod]
+*$py.class
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+
+
+app/__pycache__/
+__pycache__/
+*.pyc
+**/__pycache__
+django_app/django_app/__pycache__/
+django_app/app/__pycache__/
+
