@@ -9,13 +9,14 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+from celery.schedules import crontab
 
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
+import os
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
@@ -39,6 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app',
     'materializecssform',
+    'django_cron',
+    'django_crontab',
+    "django_celery_beat",
+    
+    
 ]
 AUTH_USER_MODEL="app.User"
 MIDDLEWARE = [
@@ -81,8 +87,27 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
-
+APP_LOG_FILENAME=os.path.join(BASE_DIR,"log/app.log")
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'WARNING',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': False,
+        },
+    },
+}
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
 
@@ -100,20 +125,46 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-
+"""CRONJOBS = [
+     ('*/1 * * * *', 'app.crontab.cron_job')
+]
+CRON_CLASSES = [
+    
+'app.cron.CronJob',
+   
+]"""
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'US/Pacific'
+#TIME_ZONE = 'UTC'
 
-USE_I18N = True
 
 USE_TZ = True
 
 
+
+USE_I18N = True
+
+USE_L10N = True
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_STORE_ERRORS_EVEN_IF_IGNORED = True
+
+CELERY_TIMEZONE = 'US/Pacific'
+
+CELERY_BROKER_URL = 'redis://localhost:6379/0'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+
+UPDATE_TIMEZON_PST=False
+CELERY_BEAT_SCHEDULER='django_celery_beat.schedulers:DatabaseScheduler'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
