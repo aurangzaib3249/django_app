@@ -7,12 +7,12 @@ __pycache__/
 # Distribution / packaging
 .Python
 build/
-
-
+task2.py
+dump.rdb
 app/__pycache__/
 __pycache__/
 *.pyc
 **/__pycache__
 django_app/django_app/__pycache__/
 django_app/app/__pycache__/
-
+migrations*
