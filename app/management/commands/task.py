@@ -9,11 +9,11 @@ import random
 date_format='%m/%d/%Y %H:%M:%S %Z'
 class Command(BaseCommand):
     def handle(self,*args, **kwargs):
-        records=20
+        records=100
         domain="@gmail.com"
         password="adminasdfghjqweq"
         
-        for i in range(1):
+        for i in range(records):
             ran = ''.join(random.choices(string.ascii_uppercase + string.digits, k = 10))    
             email="{}{}".format(ran,domain)
             user=User.objects.create(email=email)
